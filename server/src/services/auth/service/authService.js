@@ -189,7 +189,8 @@ export class AuthService {
 
             return user.role === APPLICATION_ROLES.SUPER_ADMIN
         } catch (error) {
-
+            logger.error("Error checking super admin permissions", error);
+            throw error;
         }
     }
 }

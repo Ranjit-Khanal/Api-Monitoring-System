@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: api_monitoring
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: rahul
+      POSTGRES_PASSWORD: prasanna
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
       - "5432:5432"
@@ -86,7 +86,7 @@ services:
       PG_PORT: 5432
       PG_DATABASE: api_monitoring
       PG_USER: postgres
-      PG_PASSWORD: rahul
+      PG_PASSWORD: prasanna
       # RabbitMQ (Docker container)
       RABBITMQ_URL: amqp://api_user:secure_password@rabbitmq:5672/api_monitoring
       RABBITMQ_QUEUE: api_hits

@@ -3,7 +3,7 @@ import processorContainer from '../../processor/Dependencies/dependencies.js';
 import authContainer from '../../auth/Dependencies/dependencies.js';
 
 import { AnalyticsService } from '../services/analyticsService.js';
-import { AnalyticsController } from '../controller/analyticsController.js';
+import { AnalyticsController } from '../controllers/analyticsController.js';
 
 /**
  * Container initializer for the Analytics module.

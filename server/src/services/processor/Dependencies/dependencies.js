@@ -1,4 +1,4 @@
-import { ApiHitRepository } from "../repository/ApiHitRepository.js";
+import { ApiHitRepository } from "../repository/APIHitRepository.js";
 import { MetricsRepository } from "../repository/MetricsRepository.js";
 import { ProcessorService } from "../service/ProcessorService.js";
 

@@ -47,7 +47,6 @@ export function Sidebar({ isOpen, onClose }) {
                         </div>
                         <div className={styles.logoText}>
                             <h2 className="theme-text-gradient">API Monitor</h2>
-                            <p>By Code Architecture</p>
                         </div>
                     </div>
                     <nav className={styles.navigation} aria-label="Main navigation">

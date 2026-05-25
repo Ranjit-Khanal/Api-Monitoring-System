@@ -1,0 +1,167 @@
+:root {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-foreground: 215.4 16.3% 56.9%;
+  --popover: 224 71% 4%;
+  --popover-foreground: 215 20.2% 65.1%;
+  --card: 224 71% 4%;
+  --card-foreground: 213 31% 91%;
+  --border: 216 34% 17%;
+  --input: 216 34% 17%;
+  --primary: 263 70% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 222.2 47.4% 11.2%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 216 34% 17%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 263 70% 50%;
+  --radius: 0.5rem;
+
+  --theme-background: linear-gradient(
+    135deg,
+    #020617 0%,
+    #581c87 50%,
+    #020617 100%
+  );
+  --theme-logo-bg: linear-gradient(
+    135deg,
+    hsl(263, 70%, 55%),
+    hsl(245, 58%, 55%)
+  );
+  --theme-logo-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+  --theme-text-gradient: linear-gradient(
+    135deg,
+    hsl(269, 74%, 73%),
+    hsl(245, 75%, 72%)
+  );
+  --theme-glass-bg: rgba(255, 255, 255, 0.05);
+  --theme-glass-border: rgba(255, 255, 255, 0.1);
+  --theme-glass-strong-bg: rgba(255, 255, 255, 0.1);
+  --theme-glass-strong-border: rgba(255, 255, 255, 0.2);
+}
+
+.theme-light {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --primary: 263 70% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 263 70% 50%;
+
+  --theme-background: #ffffff;
+  --theme-logo-bg: linear-gradient(
+    135deg,
+    hsl(263, 70%, 50%),
+    hsl(217, 91%, 60%)
+  );
+  --theme-logo-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+  --theme-text-gradient: linear-gradient(
+    135deg,
+    hsl(263, 70%, 50%),
+    hsl(217, 91%, 60%)
+  );
+  --theme-glass-bg: rgba(255, 255, 255, 0.9);
+  --theme-glass-border: rgba(0, 0, 0, 0.1);
+  --theme-glass-strong-bg: rgba(255, 255, 255, 0.95);
+  --theme-glass-strong-border: rgba(0, 0, 0, 0.15);
+}
+
+.theme-purple {
+  --background: 232 27% 10%;
+  --foreground: 255 85% 96%;
+  --card: 247 25% 15%;
+  --card-foreground: 255 85% 96%;
+  --popover: 247 25% 15%;
+  --popover-foreground: 255 85% 96%;
+  --primary: 265 82% 50%;
+  --primary-foreground: 255 85% 96%;
+  --secondary: 247 25% 20%;
+  --secondary-foreground: 255 85% 96%;
+  --muted: 245 20% 22%;
+  --muted-foreground: 245 40% 65%;
+  --accent: 265 100% 70%;
+  --accent-foreground: 232 27% 10%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 245 20% 25%;
+  --input: 245 20% 25%;
+  --ring: 265 82% 50%;
+
+  --theme-background: linear-gradient(
+    135deg,
+    hsl(265, 80%, 50%) 0%,
+    hsl(275, 90%, 60%) 25%,
+    hsl(285, 85%, 55%) 50%,
+    hsl(295, 90%, 65%) 75%,
+    hsl(305, 95%, 70%) 100%
+  );
+  --theme-logo-bg: linear-gradient(
+    135deg,
+    hsl(265, 80%, 50%),
+    hsl(275, 90%, 60%)
+  );
+  --theme-logo-shadow: 0 8px 32px hsl(265, 80%, 50%);
+  --theme-text-gradient: linear-gradient(
+    135deg,
+    hsl(265, 80%, 85%),
+    hsl(275, 90%, 95%)
+  );
+}
+
+.theme-light {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 10% 3.9%;
+
+  --theme-background: linear-gradient(
+    135deg,
+    hsl(200, 100%, 98%) 0%,
+    hsl(210, 50%, 96%) 25%,
+    hsl(220, 30%, 94%) 50%,
+    hsl(230, 20%, 92%) 75%,
+    hsl(240, 15%, 90%) 100%
+  );
+  --theme-logo-bg: linear-gradient(
+    135deg,
+    hsl(210, 60%, 25%),
+    hsl(220, 70%, 35%)
+  );
+  --theme-logo-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+  --theme-text-gradient: linear-gradient(
+    135deg,
+    hsl(210, 60%, 35%),
+    hsl(220, 70%, 45%)
+  );
+}

@@ -1,0 +1,92 @@
+@use "variables" as *;
+
+.glass {
+  background: var(--theme-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--theme-glass-border);
+}
+
+.glass-strong {
+  background: var(--theme-glass-strong-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--theme-glass-strong-border);
+}
+
+.theme-light .glass {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.theme-light .glass-strong {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-logo-bg {
+  background: var(--theme-logo-bg);
+  box-shadow: var(--theme-logo-shadow);
+}
+
+.theme-text-gradient {
+  background: var(--theme-text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-bg {
+  background: var(--theme-background);
+}
+
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent));
+  }
+}
+
+.focus-ring {
+  &:focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+.tooltip {
+  background: hsl(var(--popover));
+  border: 1px solid hsl(var(--border));
+  border-radius: $radius-md;
+  color: hsl(var(--popover-foreground));
+  padding: $space-2 $space-3;
+  font-size: $text-sm;
+  box-shadow: $shadow-md;
+  z-index: 50;
+}
+
+.select-content {
+  background: hsl(var(--popover));
+  border: 1px solid hsl(var(--border));
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  z-index: 50;
+}
+
+.select-item {
+  padding: $space-2 $space-3;
+  cursor: pointer;
+
+  &:hover,
+  &[data-highlighted] {
+    background: hsl(var(--accent));
+    outline: none;
+  }
+}

@@ -1,0 +1,27 @@
+.chartCard {
+  border: 1px solid hsl(var(--border) / 0.5);
+  background: hsl(var(--card) / 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.emptyChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  gap: 0.5rem;
+  color: hsl(var(--muted-foreground));
+
+  p {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  span {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+}

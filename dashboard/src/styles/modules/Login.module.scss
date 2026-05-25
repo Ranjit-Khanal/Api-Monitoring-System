@@ -1,0 +1,440 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(to bottom right,
+            rgb(76, 29, 149),
+            rgb(109, 40, 217),
+            rgb(67, 56, 202));
+    position: relative;
+    overflow: hidden;
+}
+
+.backgroundElements {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.backgroundOrb {
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    filter: blur(3rem);
+    opacity: 0.2;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    &.orb1 {
+        top: -10rem;
+        right: -10rem;
+        background-color: rgb(168, 85, 247);
+    }
+
+    &.orb2 {
+        bottom: -10rem;
+        left: -10rem;
+        background-color: rgb(99, 102, 241);
+        animation-delay: 1s;
+    }
+
+    &.orb3 {
+        top: 10rem;
+        left: 10rem;
+        background-color: rgb(236, 72, 153);
+        animation-delay: 2s;
+    }
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 28rem;
+    // Use glass-strong utility class
+    background: var(--theme-glass-strong-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--theme-glass-strong-border);
+    border-radius: 0.5rem;
+    animation: fadeIn 0.5s ease-in-out;
+    position: relative;
+    z-index: 10;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.logoContainer {
+    margin: 0 auto;
+    width: 4rem;
+    height: 4rem;
+    background: linear-gradient(to bottom right,
+            rgb(168, 85, 247),
+            rgb(99, 102, 241));
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px -3px rgba(168, 85, 247, 0.5);
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+        color: white;
+    }
+}
+
+.title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    background: linear-gradient(to right,
+            rgb(196, 181, 253),
+            rgb(129, 140, 248));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.cardContent {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.errorMessage {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: rgb(248, 113, 113);
+    font-size: 0.875rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+}
+
+.inputContainer {
+    position: relative;
+
+    svg {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1rem;
+        height: 1rem;
+        color: hsl(var(--muted-foreground));
+    }
+}
+
+.input {
+    width: 100%;
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.375rem;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: hsl(var(--muted-foreground));
+    }
+
+    &:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.submitButton {
+    width: 100%;
+    background: linear-gradient(to right,
+            rgb(168, 85, 247),
+            rgb(99, 102, 241));
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.5);
+
+    &:hover:not(:disabled) {
+        background: linear-gradient(to right,
+                rgb(147, 51, 234),
+                rgb(79, 70, 229));
+        transform: translateY(-1px);
+        box-shadow: 0 15px 25px -5px rgba(168, 85, 247, 0.6);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px hsl(var(--ring));
+    }
+}
+
+.buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+.footerText {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.credentialsHighlight {
+    color: hsl(var(--primary));
+    font-weight: 500;
+}
+
+.cardContent {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.errorMessage {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: hsla(0, 84%, 60%, 0.1);
+    border: 1px solid hsla(0, 84%, 60%, 0.5);
+    color: hsl(0, 84%, 70%);
+    font-size: 0.875rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+}
+
+.inputContainer {
+    position: relative;
+
+    svg {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1rem;
+        height: 1rem;
+        color: hsl(var(--muted-foreground));
+    }
+}
+
+.input {
+    width: 100%;
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.375rem;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+        color: hsl(var(--muted-foreground));
+    }
+
+    &:focus {
+        outline: none;
+        border-color: hsl(var(--ring));
+        box-shadow: 0 0 0 2px hsl(var(--ring) 0.2);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.submitButton {
+    width: 100%;
+    background: linear-gradient(to right,
+            hsl(265, 82%, 50%),
+            hsl(245, 80%, 55%));
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 15px -3px hsla(265, 82%, 50%, 0.5);
+
+    &:hover:not(:disabled) {
+        background: linear-gradient(to right,
+                hsl(265, 82%, 45%),
+                hsl(245, 80%, 50%));
+        transform: translateY(-1px);
+        box-shadow: 0 15px 25px -5px hsla(265, 82%, 50%, 0.6);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px hsl(var(--ring));
+    }
+}
+
+.buttonContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+.footerText {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.credentialsHighlight {
+    color: hsl(var(--primary));
+    font-weight: 500;
+}
+
+/* Light theme adjustments */
+:global(.theme-light) {
+    .container {
+        background: linear-gradient(to bottom right,
+                hsl(210, 100%, 97%),
+                hsl(220, 50%, 95%),
+                hsl(230, 30%, 93%));
+    }
+
+    .backgroundOrb {
+        &.orb1 {
+            background-color: hsl(220, 70%, 60%);
+        }
+
+        &.orb2 {
+            background-color: hsl(210, 80%, 65%);
+        }
+
+        &.orb3 {
+            background-color: hsl(200, 75%, 70%);
+        }
+    }
+
+    .logoContainer {
+        background: linear-gradient(to bottom right,
+                hsl(220, 70%, 45%),
+                hsl(210, 80%, 55%));
+        box-shadow: 0 10px 25px -3px hsla(220, 70%, 45%, 0.3);
+    }
+
+    .title {
+        background: linear-gradient(to right,
+                hsl(220, 70%, 50%),
+                hsl(210, 80%, 60%));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .submitButton {
+        background: linear-gradient(to right,
+                hsl(220, 70%, 45%),
+                hsl(210, 80%, 55%));
+        box-shadow: 0 10px 15px -3px hsla(220, 70%, 45%, 0.3);
+
+        &:hover:not(:disabled) {
+            background: linear-gradient(to right,
+                    hsl(220, 70%, 40%),
+                    hsl(210, 80%, 50%));
+            box-shadow: 0 15px 25px -5px hsla(220, 70%, 45%, 0.4);
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.1;
+    }
+}

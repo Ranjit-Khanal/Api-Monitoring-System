@@ -1,0 +1,104 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 150ms ease-in-out;
+    border: none;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid hsl(var(--ring));
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+
+// Variants
+.default {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+
+    &:hover {
+        background-color: hsl(var(--primary) / 0.9);
+    }
+}
+
+.destructive {
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+
+    &:hover {
+        background-color: hsl(var(--destructive) / 0.9);
+    }
+}
+
+.outline {
+    border: 1px solid hsl(var(--input));
+    background-color: hsl(var(--background));
+
+    &:hover {
+        background-color: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+}
+
+.secondary {
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+
+    &:hover {
+        background-color: hsl(var(--secondary) / 0.8);
+    }
+}
+
+.ghost {
+    background-color: transparent;
+
+    &:hover {
+        background-color: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+}
+
+.link {
+    color: hsl(var(--primary));
+    text-decoration-line: underline;
+    text-underline-offset: 4px;
+    background-color: transparent;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// Sizes
+.sizeDefault {
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.sizeSm {
+    height: 2.25rem;
+    border-radius: 0.375rem;
+    padding: 0 0.75rem;
+}
+
+.sizeLg {
+    height: 2.75rem;
+    border-radius: 0.375rem;
+    padding: 0 2rem;
+}
+
+.sizeIcon {
+    height: 2.5rem;
+    width: 2.5rem;
+}

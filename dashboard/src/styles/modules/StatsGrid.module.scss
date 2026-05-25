@@ -1,0 +1,208 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.statCard {
+    transition: all 300ms ease;
+    border: 1px solid hsl(var(--border) / 0.5);
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    // Dynamic animation delay will be set via inline style
+}
+
+.cardContent {
+    padding: 1.5rem;
+}
+
+.contentLayout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.textContent {
+    flex: 1 1 0%;
+}
+
+.title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.value {
+    font-size: 1.875rem; // text-3xl
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    margin: 0 0 0.25rem 0;
+
+    // Base gradient setup - colors will be applied via CSS classes
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.subtitle {
+    font-size: 0.75rem; // text-xs
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.iconContainer {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    transition: transform 300ms ease;
+
+    .statCard:hover & {
+        transform: scale(1.1);
+    }
+
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+.progressBar {
+    margin-top: 1rem;
+    height: 0.25rem;
+    width: 100%;
+    border-radius: 9999px;
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+
+    .statCard:hover & {
+        opacity: 1;
+    }
+}
+
+// Gradient color definitions for value text
+.gradientBlue {
+    --tw-gradient-from: #3b82f6;
+    --tw-gradient-to: #06b6d4;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.gradientPurple {
+    --tw-gradient-from: #a855f7;
+    --tw-gradient-to: #ec4899;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.gradientRed {
+    --tw-gradient-from: #ef4444;
+    --tw-gradient-to: #f97316;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.gradientGreen {
+    --tw-gradient-from: #22c55e;
+    --tw-gradient-to: #10b981;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.gradientIndigo {
+    --tw-gradient-from: #6366f1;
+    --tw-gradient-to: #3b82f6;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.gradientYellow {
+    --tw-gradient-from: #eab308;
+    --tw-gradient-to: #f97316;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+// Background colors for icon containers
+.bgBlue {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.bgPurple {
+    background-color: rgba(168, 85, 247, 0.1);
+}
+
+.bgRed {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.bgGreen {
+    background-color: rgba(34, 197, 94, 0.1);
+}
+
+.bgIndigo {
+    background-color: rgba(99, 102, 241, 0.1);
+}
+
+.bgYellow {
+    background-color: rgba(234, 179, 8, 0.1);
+}
+
+// Text colors for icons
+.textBlue {
+    color: rgb(59, 130, 246);
+}
+
+.textPurple {
+    color: hsl(var(--primary));
+}
+
+.textRed {
+    color: rgb(239, 68, 68);
+}
+
+.textGreen {
+    color: rgb(34, 197, 94);
+}
+
+.textIndigo {
+    color: rgb(99, 102, 241);
+}
+
+.textYellow {
+    color: rgb(234, 179, 8);
+}
+
+// Progress bar backgrounds
+.progressBlue {
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+}
+
+.progressPurple {
+    background: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.progressRed {
+    background: linear-gradient(to right, #ef4444, #f97316);
+}
+
+.progressGreen {
+    background: linear-gradient(to right, #22c55e, #10b981);
+}
+
+.progressIndigo {
+    background: linear-gradient(to right, #6366f1, #3b82f6);
+}
+
+.progressYellow {
+    background: linear-gradient(to right, #eab308, #f97316);
+}

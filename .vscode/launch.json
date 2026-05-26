@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug server (nodemon)",
+      "runtimeExecutable": "nodemon",
+      "args": ["--watch", "src", "--exec", "nodemon server.js"],
+      "cwd": "${workspaceFolder}/server",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}

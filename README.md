@@ -14,6 +14,8 @@ A real-time API hit tracking and monitoring platform. External services report e
 - [Retry Strategy & Dead Letter Queue](#retry-strategy--dead-letter-queue)
 - [Event Producer & Consumer](#event-producer--consumer)
 - [Authentication & Authorization](#authentication--authorization)
+- [Onboarding External Services](#onboarding-external-services)
+- [Using the Dashboard (Frontend)](#using-the-dashboard-frontend)
 - [Services Overview](#services-overview)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -358,6 +360,252 @@ The system has two access paths with different auth mechanisms:
 - Role-based access:
   - **Super admin** — can view analytics for any client (optional `?clientId` query param).
   - **Client user** — scoped to their own `clientId`; requires `canViewAnalytics` permission.
+
+---
+
+## Onboarding External Services
+
+External services **do not self-register** through the dashboard. Registration is an **admin-driven, API-only flow** on the backend. The dashboard is for **viewing metrics**, not for onboarding clients or issuing API keys.
+
+There are two completely separate access paths:
+
+| Who | Auth method | What they do |
+|-----|-------------|--------------|
+| **External API services** (your apps) | `x-api-key` header | `POST /api/ingest` — report API hits |
+| **Dashboard users** (humans) | JWT cookie (`authToken`) | `GET /api/analytics/*` — view charts and stats |
+
+```mermaid
+sequenceDiagram
+    participant Admin as Super Admin
+    participant API as API Server
+    participant Ext as External Service
+    participant Dash as Dashboard User
+
+    Note over Admin,API: One-time setup (backend APIs only)
+    Admin->>API: POST /api/auth/onboard-super-admin
+    Admin->>API: POST /api/auth/login
+    Admin->>API: POST /api/admin/clients/onboard
+    Admin->>API: POST /api/admin/clients/:id/api/keys
+    API-->>Admin: API key (apim_...)
+
+    Note over Ext,API: Runtime — external service reports hits
+    Ext->>API: POST /api/ingest (x-api-key)
+    API-->>Ext: 202 queued
+
+    Note over Dash,API: Runtime — human views metrics
+    Dash->>API: POST /api/auth/login
+    Dash->>API: GET /api/analytics/dashboard
+    API-->>Dash: Stats, charts, top endpoints
+```
+
+### Step 1 — Bootstrap the super admin (first run only)
+
+On a fresh database, create the first super admin. This endpoint only works **once** — when no users exist.
+
+```bash
+curl -X POST http://localhost:5000/api/auth/onboard-super-admin \
+  -H "Content-Type: application/json" \
+  -c cookies.txt \
+  -d '{
+    "username": "admin",
+    "email": "admin@example.com",
+    "password": "admin123"
+  }'
+```
+
+The response sets an `authToken` HTTP-only cookie used for all subsequent admin calls.
+
+### Step 2 — Log in as super admin
+
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -c cookies.txt \
+  -d '{
+    "username": "admin",
+    "password": "admin123"
+  }'
+```
+
+### Step 3 — Onboard a client (organization)
+
+Each **client** represents an organization or product whose APIs you want to monitor (e.g. "Acme Corp", "User Service Team").
+
+```bash
+curl -X POST http://localhost:5000/api/admin/clients/onboard \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "name": "Acme Corp",
+    "email": "ops@acme.com",
+    "description": "Production API monitoring",
+    "website": "https://acme.com"
+  }'
+```
+
+Save the returned `_id` — this is the `clientId` used in all later steps.
+
+### Step 4 — Create a dashboard user for the client (optional)
+
+If someone from that organization needs to log into the dashboard and view their metrics:
+
+```bash
+curl -X POST http://localhost:5000/api/admin/clients/<clientId>/users \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "username": "acme-viewer",
+    "email": "viewer@acme.com",
+    "password": "securepass",
+    "role": "client_admin"
+  }'
+```
+
+| Role | Dashboard access | Can create API keys |
+|------|-----------------|---------------------|
+| `client_admin` | View analytics for their client | Yes |
+| `client_viewer` | View analytics for their client | No |
+| `super_admin` | View analytics for any client | Yes |
+
+### Step 5 — Create an API key for the external service
+
+This is what your external service uses to authenticate ingest requests. Only **super admins** and **client admins** can create keys.
+
+```bash
+curl -X POST http://localhost:5000/api/admin/clients/<clientId>/api/keys \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "name": "user-service-prod",
+    "description": "Production ingest key for user-service",
+    "environment": "production"
+  }'
+```
+
+The response includes the `keyValue` (format: `apim_<random_hex>`). **Save it immediately** — listing keys later returns metadata only, not the full key value.
+
+### Step 6 — External service reports API hits
+
+Integrate this into your external service. After every API call (or on a schedule), POST the hit data:
+
+```bash
+curl -X POST http://localhost:5000/api/ingest \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: apim_<your-key-here>" \
+  -d '{
+    "serviceName": "user-service",
+    "endpoint": "/api/users",
+    "method": "GET",
+    "statusCode": 200,
+    "latencyMs": 145.2
+  }'
+```
+
+**Required fields:** `serviceName`, `endpoint`, `method`, `statusCode`, `latencyMs`
+
+`clientId` and `apiKeyId` are resolved automatically from the API key — do not send them.
+
+**Example integration (Node.js):**
+
+```javascript
+async function reportApiHit({ serviceName, endpoint, method, statusCode, latencyMs }) {
+  await fetch('http://localhost:5000/api/ingest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.API_MONITORING_KEY,
+    },
+    body: JSON.stringify({ serviceName, endpoint, method, statusCode, latencyMs }),
+  });
+}
+
+// Call after each request in your service middleware:
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    reportApiHit({
+      serviceName: 'user-service',
+      endpoint: req.path,
+      method: req.method,
+      statusCode: res.statusCode,
+      latencyMs: Date.now() - start,
+    }).catch(console.error);
+  });
+  next();
+});
+```
+
+### Admin API reference (backend only)
+
+These endpoints exist on the API server but are **not exposed in the dashboard UI** today. Use curl, Postman, or your own admin tooling.
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| `POST` | `/api/auth/onboard-super-admin` | None (first run only) | Create initial super admin |
+| `POST` | `/api/auth/login` | None | Login, receive JWT cookie |
+| `POST` | `/api/admin/clients/onboard` | JWT (super admin) | Register a new client/organization |
+| `POST` | `/api/admin/clients/:clientId/users` | JWT | Create a dashboard user for a client |
+| `POST` | `/api/admin/clients/:clientId/api/keys` | JWT (super/client admin) | Issue an ingest API key |
+| `GET` | `/api/admin/clients/:clientId/api/keys` | JWT | List API keys (values redacted) |
+
+---
+
+## Using the Dashboard (Frontend)
+
+The React dashboard is a **read-only analytics viewer**. It does not handle client registration or API key management.
+
+### What the frontend does
+
+1. **Login** — `POST /api/auth/login` with username/password; server sets an HTTP-only `authToken` cookie.
+2. **Session check** — on load, calls `GET /api/auth/profile` to verify the cookie.
+3. **Dashboard** — calls `GET /api/analytics/dashboard` and displays:
+   - Total hits, error rate, average latency
+   - API hits chart and status distribution
+   - Top endpoints list
+4. **Auto-refresh** — refetches dashboard data every 30 seconds.
+5. **Settings** — theme/appearance only (no API key or client management).
+
+### What the frontend does NOT do (yet)
+
+- Onboard new clients
+- Create or rotate API keys
+- Manage users or roles
+- Configure external service integrations
+
+Those operations must be done via the **backend admin APIs** described above.
+
+### Who sees what in the dashboard
+
+| Logged-in role | Data scope |
+|----------------|------------|
+| `client_admin` / `client_viewer` | Metrics for their own `clientId` only |
+| `super_admin` | All clients (can pass `?clientId=` to filter) |
+
+### Frontend setup
+
+```bash
+cd dashboard
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Open http://localhost:5173 and log in with a user created in Step 4 (or the super admin from Step 1).
+
+The Vite dev server proxies `/api` requests to `http://localhost:5000`, so no CORS configuration is needed locally.
+
+### End-to-end checklist
+
+```
+1. docker compose up          → Postgres, Mongo, RabbitMQ
+2. npm run dev (server/)      → API server on :5000
+3. node src/services/processor/consumer.js  → processes queued hits
+4. POST /api/auth/onboard-super-admin       → create admin (first run)
+5. POST /api/admin/clients/onboard          → register organization
+6. POST /api/admin/clients/:id/api/keys     → get ingest key
+7. External service POST /api/ingest        → report hits (with x-api-key)
+8. npm run dev (dashboard/)   → view metrics at :5173
+```
 
 ---
 

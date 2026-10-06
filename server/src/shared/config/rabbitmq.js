@@ -79,7 +79,7 @@ class RabbitMQConnection {
 
 
     getStatus() {
-        if (!this.connect || !this.channel) return "disconnected";
+        if (!this.connection || !this.channel) return "disconnected";
         if (this.connect.closing) return "closing";
         return "connected"
     }
